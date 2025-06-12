@@ -23,7 +23,7 @@ export default function Home() {
           />
         </div>
         <div className="absolute top-0 left-0 h-[60vh] w-full bg-black bg-opacity-40 z-10 flex flex-col justify-center items-center text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">Welcome to Heart Fusion Camp</h1>
+          <h1 className="text-4xl md:text-6xl font-bold text-white drop-shadow-lg">Welcome to Heart Fusion Camp )'(</h1>
           <p className="mt-4 max-w-2xl text-white text-lg md:text-xl drop-shadow-md">
             A splash of art, a heartful moment of dancing, and a warm family vibe;
             Heart Fusion is where creativity and connection pulse through every glowing thread.
