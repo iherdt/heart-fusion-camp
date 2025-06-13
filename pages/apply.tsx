@@ -24,7 +24,7 @@ export default function ApplyPage() {
         </p>
         <div className="flex justify-center">
           <a
-            href="https://example.com/apply" // Replace with your real form link
+            href="https://forms.gle/cpKTQiBve45ZuXi9A" 
             className="px-6 py-3 bg-black text-white rounded-lg text-lg transition duration-300 hover:bg-gray-800"
           >
             Apply Now
