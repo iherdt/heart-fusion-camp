@@ -25,6 +25,8 @@ export default function ApplyPage() {
         <div className="flex justify-center">
           <a
             href="https://forms.gle/cpKTQiBve45ZuXi9A" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-6 py-3 bg-black text-white rounded-lg text-lg transition duration-300 hover:bg-gray-800"
           >
             Apply Now
