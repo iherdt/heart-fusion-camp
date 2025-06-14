@@ -1,8 +1,42 @@
+'use client'
+
+import { useState } from 'react'
 import NavBar from '../components/NavBar'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function HomePage() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('sending')
+
+    try {
+      const res = await fetch('https://formspree.io/f/manjorrj', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: new FormData(e.target as HTMLFormElement)
+      })
+
+      if (res.ok) {
+        setFormData({ name: '', email: '', message: '' })
+        setStatus('success')
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
+
   return (
     <div className="bg-[rgb(249,240,234)] min-h-screen scroll-smooth">
       <NavBar />
@@ -69,19 +103,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Email Form with Extra Bottom Padding */}
+      {/* Contact Form */}
       <section className="bg-[rgb(249,240,234)] pb-40">
         <div className="bg-white max-w-xl mx-auto mt-16 p-8 rounded-lg shadow">
           <h2 className="text-2xl font-semibold mb-4 text-center">Connect with Us</h2>
           <p className="text-center text-gray-700 mb-6">
-            Want to know more? Have any questions? Get in touch using the form below, or if you're ready to jump straight in, just <Link href="/apply" className="text-pink-600 underline">apply here</Link>!
+            Want to know more? Have any questions? Get in touch using the form below, or if you're ready to jump straight in, just{' '}
+            <Link href="/apply" className="text-pink-600 underline">apply here</Link>!
           </p>
-          <form action="https://example.com/form" method="POST" className="space-y-4">
+
+          {status === 'success' && (
+            <p className="text-[#ff4d4d] font-semibold text-center mb-4">
+              Thanks for reaching out! We'll be in touch soon.
+            </p>
+          )}
+          {status === 'error' && (
+            <p className="text-[#ff4d4d] font-semibold text-center mb-4">
+              Oops, something went wrong. Please try again.
+            </p>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
               name="name"
               placeholder="Name"
               required
+              value={formData.name}
+              onChange={handleChange}
               className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-black"
             />
             <input
@@ -89,6 +138,8 @@ export default function HomePage() {
               name="email"
               placeholder="Email"
               required
+              value={formData.email}
+              onChange={handleChange}
               className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-black"
             />
             <textarea
@@ -96,13 +147,16 @@ export default function HomePage() {
               placeholder="Message"
               rows={4}
               required
+              value={formData.message}
+              onChange={handleChange}
               className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring focus:border-black"
             />
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 rounded-md text-lg hover:bg-gray-800 transition"
+              disabled={status === 'sending'}
+              className="w-full bg-black text-white py-2 rounded-md text-lg hover:bg-gray-800 transition disabled:opacity-50"
             >
-              SEND
+              {status === 'sending' ? 'Sending...' : 'SEND'}
             </button>
           </form>
         </div>
