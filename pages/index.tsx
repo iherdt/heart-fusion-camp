@@ -74,8 +74,10 @@ export default function HomePage() {
         <div className="w-full md:w-1/2">
           <div className="relative w-full h-64 md:h-[400px] rounded-lg overflow-hidden shadow-lg">
             <Image
-              src="/images/trio.jpg"
-              alt="Burner plane selfie"
+              src="/images/team.jpg"
+              alt="Haert Fusion Team"
+              className="rounded-lg"
+              priority
               layout="fill"
               objectFit="cover"
             />
